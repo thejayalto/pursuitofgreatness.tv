@@ -7,13 +7,19 @@ import { getMovies, type Movie } from "@/lib/movies"
 export function MovieDisplay() {
   const [movies, setMovies] = useState<Movie[]>([])
   const [currentIndex, setCurrentIndex] = useState(0)
+  const [unseenIndices, setUnseenIndices] = useState<number[]>([])
   const [isTransitioning, setIsTransitioning] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
     async function fetchMovies() {
       const data = await getMovies()
+      const startIndex = Math.floor(Math.random() * data.length)
       setMovies(data)
+      setCurrentIndex(startIndex)
+      setUnseenIndices(
+        Array.from({ length: data.length }, (_, i) => i).filter(i => i !== startIndex)
+      )
       setIsLoading(false)
       
       // Preload all poster images (optimized by Next.js, ~4-5MB total)
@@ -31,14 +37,17 @@ export function MovieDisplay() {
     if (movies.length === 0) return
     setIsTransitioning(true)
     setTimeout(() => {
-      let newIndex: number
-      do {
-        newIndex = Math.floor(Math.random() * movies.length)
-      } while (newIndex === currentIndex && movies.length > 1)
+      let pool = unseenIndices
+      if (pool.length === 0) {
+        pool = Array.from({ length: movies.length }, (_, i) => i).filter(i => i !== currentIndex)
+      }
+      const randomIdx = Math.floor(Math.random() * pool.length)
+      const newIndex = pool[randomIdx]
       setCurrentIndex(newIndex)
+      setUnseenIndices(pool.filter(i => i !== newIndex))
       setIsTransitioning(false)
     }, 300)
-  }, [currentIndex, movies.length])
+  }, [currentIndex, movies.length, unseenIndices])
 
   return (
     <main 
@@ -62,6 +71,20 @@ export function MovieDisplay() {
             priority
           />
         </h1>
+        <a 
+          href="https://www.antislop.xyz/" 
+          target="_blank" 
+          rel="noopener noreferrer"
+          className="md:hidden inline-block mt-0.5"
+        >
+          <Image
+            src="/poweredby3.png"
+            alt="Powered by antislop"
+            width={100}
+            height={20}
+            className="h-7 w-auto opacity-70"
+          />
+        </a>
       </header>
 
       {/* Main Content */}
@@ -116,30 +139,30 @@ export function MovieDisplay() {
         className="hidden md:block absolute bottom-4 right-4"
       >
         <Image
-          src="/poweredby.png"
+          src="/poweredby4.png"
           alt="Powered by antislop"
           width={120}
           height={40}
-          className="h-24 w-auto opacity-70 hover:opacity-100 transition-opacity duration-200"
+          className="h-20 w-auto opacity-70 hover:opacity-100 transition-opacity duration-200"
         />
       </a>
 
       {/* Shuffle Button */}
-      <div className="absolute bottom-0 left-1/2 -translate-x-1/2">
+      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 leading-[0]">
         <button
           onClick={handleShuffle}
-          className="relative cursor-pointer group"
+          className="relative cursor-pointer group flex p-0 border-0"
           aria-label="Shuffle to a random movie recommendation"
         >
           <img
             src="/button4.png"
             alt="Shuffle"
-            className="h-52 md:h-56 w-auto max-w-none group-hover:opacity-0 transition-opacity duration-200"
+            className="block h-44 md:h-56 w-auto max-w-none group-hover:opacity-0 transition-opacity duration-200"
           />
           <img
             src="/button4.2.png"
             alt=""
-            className="h-52 md:h-56 w-auto max-w-none absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-200"
+            className="block h-44 md:h-56 w-auto max-w-none absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-200"
           />
         </button>
       </div>
