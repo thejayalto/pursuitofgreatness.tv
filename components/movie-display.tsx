@@ -80,9 +80,9 @@ export function MovieDisplay() {
           <Image
             src="/poweredby3.png"
             alt="Powered by antislop"
-            width={100}
-            height={20}
-            className="h-7 w-auto opacity-70"
+            width={300}
+            height={60}
+            className="h-6 w-auto opacity-70"
           />
         </a>
       </header>
