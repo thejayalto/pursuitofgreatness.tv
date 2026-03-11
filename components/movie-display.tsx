@@ -116,14 +116,13 @@ export function MovieDisplay() {
 
             {/* Details */}
             <div className="flex flex-col justify-center text-center md:text-left md:self-center">
-              <h2 className="font-serif text-3xl md:text-3xl lg:text-4xl font-bold text-white leading-tight text-balance">
+              <h2 className="font-serif text-3xl md:text-3xl lg:text-4xl font-extrabold text-white leading-tight text-balance tracking-tight">
                 {movie.show_title}
               </h2>
-              <p className="-mt-1 text-base md:text-lg text-white">
-                <span className="italic font-serif">Director:</span>{" "}
-                {movie.show_director}
+              <p className="-mt-1 text-sm md:text-base text-gray-200 italic" style={{ fontFamily: 'Helvetica, Arial, sans-serif' }}>
+                Director: {movie.show_director}
               </p>
-              <p className="mt-2 md:mt-4 text-base md:text-xl text-white max-w-sm text-pretty">
+              <p className="mt-2 md:mt-4 text-base md:text-xl text-gray-200 max-w-sm text-pretty font-medium leading-tight">
                 {movie.show_description.replace(/^["']|["']$/g, '')}
               </p>
             </div>
@@ -155,14 +154,14 @@ export function MovieDisplay() {
           aria-label="Shuffle to a random movie recommendation"
         >
           <img
-            src="/button4.png"
+            src="/button5.png"
             alt="Shuffle"
-            className="block h-44 md:h-56 w-auto max-w-none group-hover:opacity-0 transition-opacity duration-200"
+            className="block h-32 md:h-40 w-auto max-w-none group-hover:opacity-0 transition-opacity duration-200"
           />
           <img
-            src="/button4.2.png"
+            src="/button5.2.png"
             alt=""
-            className="block h-44 md:h-56 w-auto max-w-none absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-200"
+            className="block h-32 md:h-40 w-auto max-w-none absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-200"
           />
         </button>
       </div>
