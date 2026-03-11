@@ -63,3 +63,16 @@
     @apply bg-background text-foreground tracking-tighter leading-none;
   }
 }
+
+.clouds-bg {
+  background-image: url('/clouds13.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+@media (max-width: 768px) {
+  .clouds-bg {
+    background-image: url('/cloudsmobile.png');
+  }
+}

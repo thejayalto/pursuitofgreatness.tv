@@ -51,13 +51,7 @@ export function MovieDisplay() {
 
   return (
     <main 
-      className="relative h-dvh overflow-hidden flex flex-col items-center px-4 pt-3 md:pt-5 text-foreground"
-      style={{ 
-        backgroundImage: 'url(/clouds13.png)',
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        backgroundRepeat: 'no-repeat'
-      }}
+      className="relative h-dvh overflow-hidden flex flex-col items-center px-4 pt-3 md:pt-5 text-foreground clouds-bg"
     >
       {/* Masthead */}
       <header className="text-center mb-4 md:mb-12">
@@ -100,7 +94,7 @@ export function MovieDisplay() {
             }`}
           >
             {/* Poster */}
-            <div className="shrink-0 h-[40vh] md:h-auto md:w-[260px] lg:w-[280px]">
+            <div className="shrink-0 h-[50vh] md:h-auto md:w-[260px] lg:w-[280px]">
               <div className="relative aspect-[2/3] h-full md:h-auto md:w-full">
                 <Image
                   key={movie.id}
@@ -122,7 +116,7 @@ export function MovieDisplay() {
               <p className="-mt-1 text-sm md:text-base text-gray-200 italic" style={{ fontFamily: 'Helvetica, Arial, sans-serif' }}>
                 Director: {movie.show_director}
               </p>
-              <p className="mt-2 md:mt-4 text-base md:text-xl text-gray-200 max-w-sm text-pretty font-medium leading-tight">
+              <p className="hidden md:block mt-2 md:mt-4 text-base md:text-xl text-gray-200 max-w-sm text-pretty font-medium leading-tight">
                 {movie.show_description.replace(/^["']|["']$/g, '')}
               </p>
             </div>
