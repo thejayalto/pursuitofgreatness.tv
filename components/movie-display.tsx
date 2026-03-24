@@ -113,10 +113,10 @@ export function MovieDisplay() {
               <h2 className="font-serif text-3xl md:text-3xl lg:text-4xl font-extrabold text-white leading-tight text-balance tracking-tight">
                 {movie.show_title}
               </h2>
-              <p className="-mt-1 text-sm md:text-base text-gray-200 italic" style={{ fontFamily: 'Helvetica, Arial, sans-serif' }}>
+              <p className="-mt-1 text-sm md:text-lg text-gray-200 italic" style={{ fontFamily: 'Helvetica, Arial, sans-serif' }}>
                 Director: {movie.show_director}
               </p>
-              <p className="hidden md:block mt-2 md:mt-4 text-base md:text-xl text-gray-200 max-w-sm text-pretty font-medium leading-tight">
+              <p className="hidden md:block mt-2 md:mt-4 text-sm md:text-lg text-gray-200 max-w-sm text-pretty font-medium leading-tight" style={{ fontFamily: 'Helvetica, Arial, sans-serif' }}>
                 {movie.show_description.replace(/^["']|["']$/g, '')}
               </p>
             </div>
@@ -148,7 +148,7 @@ export function MovieDisplay() {
           aria-label="Shuffle to a random movie recommendation"
         >
           <img
-            src="/button5.png"
+            src="/button5.1.png"
             alt="Shuffle"
             className="block h-32 md:h-40 w-auto max-w-none group-hover:opacity-0 transition-opacity duration-200"
           />

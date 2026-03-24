@@ -6,12 +6,13 @@ export interface Movie {
   show_director: string
   show_description: string
   show_poster_url: string
+  category: string
 }
 
 export async function getMovies(): Promise<Movie[]> {
   const { data, error } = await supabase
     .from("show_list")
-    .select("id, show_title, show_director, show_description, show_poster_url")
+    .select("id, show_title, show_director, show_description, show_poster_url, category")
     .order("id")
 
   if (error) {
