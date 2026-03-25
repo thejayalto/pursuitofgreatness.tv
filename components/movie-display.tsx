@@ -72,11 +72,11 @@ export function MovieDisplay() {
           className="md:hidden inline-block mt-0.5"
         >
           <Image
-            src="/poweredby3.png"
+            src="/poweredbymobile.png"
             alt="Powered by antislop"
             width={300}
             height={60}
-            className="h-6 w-auto opacity-70"
+            className="h-7 w-auto opacity-70"
           />
         </a>
       </header>
@@ -94,8 +94,8 @@ export function MovieDisplay() {
             }`}
           >
             {/* Poster */}
-            <div className="shrink-0 h-[50vh] md:h-auto md:w-[260px] lg:w-[280px]">
-              <div className="relative aspect-[2/3] h-full md:h-auto md:w-full">
+            <div className="shrink-0 h-[45vh] md:h-auto md:w-[260px] lg:w-[280px]">
+              <div className="relative aspect-[2/3] h-full md:h-auto md:w-full overflow-hidden" style={{ borderRadius: '8px' }}>
                 <Image
                   key={movie.id}
                   src={movie.show_poster_url}
@@ -113,7 +113,7 @@ export function MovieDisplay() {
               <h2 className="font-serif text-3xl md:text-3xl lg:text-4xl font-extrabold text-white leading-tight text-balance tracking-tight">
                 {movie.show_title}
               </h2>
-              <p className="-mt-1 text-sm md:text-lg text-gray-200 italic" style={{ fontFamily: 'Helvetica, Arial, sans-serif' }}>
+              <p className="-mt-1 text-base md:text-lg text-gray-200 italic" style={{ fontFamily: 'Helvetica, Arial, sans-serif' }}>
                 Director: {movie.show_director}
               </p>
               <p className="hidden md:block mt-2 md:mt-4 text-sm md:text-lg text-gray-200 max-w-sm text-pretty font-medium leading-tight" style={{ fontFamily: 'Helvetica, Arial, sans-serif' }}>
@@ -132,11 +132,11 @@ export function MovieDisplay() {
         className="hidden md:block absolute bottom-4 right-4"
       >
         <Image
-          src="/poweredby4.png"
+          src="/poweredbymobile.png"
           alt="Powered by antislop"
           width={120}
           height={40}
-          className="h-20 w-auto opacity-70 hover:opacity-100 transition-opacity duration-200"
+          className="h-12 w-auto opacity-70 hover:opacity-100 transition-opacity duration-200"
         />
       </a>
 
