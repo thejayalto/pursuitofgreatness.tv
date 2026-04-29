@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useCallback, useEffect } from "react"
+import { useState, useCallback, useEffect, useRef } from "react"
 import Image from "next/image"
 import { getMovies, type Movie } from "@/lib/movies"
 
@@ -8,6 +8,8 @@ export function MovieDisplay() {
   const [movies, setMovies] = useState<Movie[]>([])
   const [currentIndex, setCurrentIndex] = useState(0)
   const [unseenIndices, setUnseenIndices] = useState<number[]>([])
+  const [history, setHistory] = useState<number[]>([])
+  const [historyPos, setHistoryPos] = useState(-1)
   const [isTransitioning, setIsTransitioning] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
 
@@ -20,6 +22,8 @@ export function MovieDisplay() {
       setUnseenIndices(
         Array.from({ length: data.length }, (_, i) => i).filter(i => i !== startIndex)
       )
+      setHistory([startIndex])
+      setHistoryPos(0)
       setIsLoading(false)
       
       // Preload all poster images (optimized by Next.js, ~4-5MB total)
@@ -34,7 +38,7 @@ export function MovieDisplay() {
   const movie = movies[currentIndex]
 
   const handleShuffle = useCallback(() => {
-    if (movies.length === 0) return
+    if (movies.length === 0 || isTransitioning) return
     setIsTransitioning(true)
     setTimeout(() => {
       let pool = unseenIndices
@@ -45,9 +49,57 @@ export function MovieDisplay() {
       const newIndex = pool[randomIdx]
       setCurrentIndex(newIndex)
       setUnseenIndices(pool.filter(i => i !== newIndex))
+      setHistory(prev => [...prev.slice(0, historyPos + 1), newIndex])
+      setHistoryPos(prev => prev + 1)
       setIsTransitioning(false)
     }, 300)
-  }, [currentIndex, movies.length, unseenIndices])
+  }, [currentIndex, movies.length, unseenIndices, historyPos, isTransitioning])
+
+  const handleBack = useCallback(() => {
+    if (historyPos <= 0 || isTransitioning) return
+    setIsTransitioning(true)
+    setTimeout(() => {
+      const newPos = historyPos - 1
+      setCurrentIndex(history[newPos])
+      setHistoryPos(newPos)
+      setIsTransitioning(false)
+    }, 300)
+  }, [history, historyPos, isTransitioning])
+
+  useEffect(() => {
+    function onKeyDown(e: KeyboardEvent) {
+      if (e.key === "ArrowRight") handleShuffle()
+      if (e.key === "ArrowLeft") handleBack()
+    }
+    window.addEventListener("keydown", onKeyDown)
+    return () => window.removeEventListener("keydown", onKeyDown)
+  }, [handleShuffle, handleBack])
+
+  const touchStartX = useRef<number | null>(null)
+
+  useEffect(() => {
+    const minSwipeDistance = 50
+
+    function onTouchStart(e: TouchEvent) {
+      touchStartX.current = e.touches[0].clientX
+    }
+
+    function onTouchEnd(e: TouchEvent) {
+      if (touchStartX.current === null) return
+      const dx = e.changedTouches[0].clientX - touchStartX.current
+      touchStartX.current = null
+      if (Math.abs(dx) < minSwipeDistance) return
+      if (dx < 0) handleShuffle()
+      else handleBack()
+    }
+
+    window.addEventListener("touchstart", onTouchStart, { passive: true })
+    window.addEventListener("touchend", onTouchEnd, { passive: true })
+    return () => {
+      window.removeEventListener("touchstart", onTouchStart)
+      window.removeEventListener("touchend", onTouchEnd)
+    }
+  }, [handleShuffle, handleBack])
 
   return (
     <main 
